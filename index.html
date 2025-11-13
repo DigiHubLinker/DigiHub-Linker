@@ -1,17 +1,671 @@
-<?php
-/**
- * Front to the WordPress application. This file doesn't do anything, but loads
- * wp-blog-header.php which does and tells WordPress to load the theme.
- *
- * @package WordPress
- */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DigiHub Linker – Smart Digital Tools for Online Business</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-/**
- * Tells WordPress to load the WordPress theme and output it.
- *
- * @var bool
- */
-define( 'WP_USE_THEMES', true );
+  <meta name="description" content="DigiHub Linker helps entrepreneurs, freelancers, and small business owners discover the best digital tools for marketing, automation, SEO, and AI-powered business growth.">
 
-/** Loads the WordPress Environment and Template */
-require __DIR__ . '/wp-blog-header.php';
+  <style>
+    :root {
+      --dhl-blue: #007BFF;
+      --dhl-blue-dark: #005EE9;
+      --dhl-text: #7A7A7A;
+      --dhl-bg: #F6F8FF;
+      --dhl-border: #E1E7FF;
+      --dhl-link: #7A7A7A;
+      --dhl-link-hover: #005EE9;
+      --dhl-radius-lg: 18px;
+      --dhl-radius-xl: 24px;
+      --dhl-shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--dhl-text);
+      background: radial-gradient(circle at top left, #F8FBFF, #F3F5FF);
+    }
+
+    a {
+      color: var(--dhl-link);
+      text-decoration: none;
+      transition: color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--dhl-link-hover);
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0 6px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 150px;
+      max-height: 52px;
+      object-fit: contain;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--dhl-blue);
+      letter-spacing: 0.02em;
+    }
+
+    .brand-tagline {
+      font-size: 0.8rem;
+      color: var(--dhl-text);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 0.9rem;
+    }
+
+    .nav a {
+      padding: 6px 0;
+      position: relative;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -4px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--dhl-blue), var(--dhl-blue-dark));
+      opacity: 0;
+      transform: scaleX(0.4);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .nav a:hover::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .nav-cta {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--dhl-blue), var(--dhl-blue-dark));
+      color: #fff !important;
+      font-weight: 600;
+      box-shadow: 0 10px 24px rgba(0, 123, 255, 0.28);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(0, 123, 255, 0.35);
+    }
+
+    /* Hero */
+    .hero-wrap {
+      margin-top: 28px;
+      margin-bottom: 32px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.1fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 123, 255, 0.06);
+      color: var(--dhl-blue-dark);
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid rgba(0, 123, 255, 0.18);
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.16);
+    }
+
+    .hero-title {
+      margin: 14px 0 8px;
+      font-size: clamp(2.2rem, 3vw, 2.7rem);
+      line-height: 1.12;
+      color: var(--dhl-blue-dark);
+      letter-spacing: 0.01em;
+    }
+
+    .hero-title span {
+      color: var(--dhl-blue);
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      max-width: 520px;
+      color: var(--dhl-text);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 8px;
+    }
+
+    .btn-primary, .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--dhl-blue), var(--dhl-blue-dark));
+      color: #fff;
+      box-shadow: 0 12px 26px rgba(0, 123, 255, 0.32);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(0, 123, 255, 0.4);
+    }
+
+    .btn-ghost {
+      background: #fff;
+      color: var(--dhl-blue-dark);
+      border-color: rgba(0, 94, 233, 0.18);
+    }
+
+    .btn-ghost:hover {
+      background: #f4f6ff;
+      border-color: rgba(0, 94, 233, 0.35);
+    }
+
+    .btn-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .hero-microcopy {
+      font-size: 0.78rem;
+      color: #9aa0b3;
+      margin-top: 6px;
+    }
+
+    .hero-microcopy strong {
+      color: var(--dhl-blue-dark);
+    }
+
+    /* Hero card */
+    .hero-card {
+      background: linear-gradient(145deg, #ffffff, #f5f7ff);
+      border-radius: var(--dhl-radius-xl);
+      padding: 18px 18px 16px;
+      box-shadow: var(--dhl-shadow-soft);
+      border: 1px solid rgba(225, 231, 255, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .hero-card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--dhl-blue-dark);
+    }
+
+    .hero-card-pill {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(0, 123, 255, 0.06);
+      font-size: 0.7rem;
+      color: var(--dhl-blue-dark);
+      border: 1px solid rgba(0, 123, 255, 0.2);
+    }
+
+    .hero-card-body {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--dhl-text);
+      margin-bottom: 14px;
+    }
+
+    .hero-card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 6px;
+      font-size: 0.8rem;
+    }
+
+    .hero-card-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .hero-card-list li span {
+      font-size: 0.9rem;
+      color: var(--dhl-blue-dark);
+      line-height: 1.3;
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #9aa0b3;
+      margin-top: 4px;
+    }
+
+    .hero-badge-stack {
+      position: absolute;
+      right: -18px;
+      bottom: -18px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, rgba(0, 123, 255, 0.2), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      color: var(--dhl-blue-dark);
+      margin-bottom: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: var(--dhl-radius-lg);
+      padding: 13px 14px;
+      border: 1px solid var(--dhl-border);
+      box-shadow: 0 5px 14px rgba(15, 23, 42, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--dhl-blue-dark);
+    }
+
+    .card-text {
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .card-link {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--dhl-blue-dark);
+    }
+
+    .card-link span {
+      font-size: 1rem;
+    }
+
+    /* Social strip */
+    .social-strip {
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      background: rgba(244, 246, 255, 0.95);
+      border: 1px dashed rgba(0, 94, 233, 0.25);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    .social-strip-label {
+      font-weight: 600;
+      color: var(--dhl-blue-dark);
+    }
+
+    .social-pill {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--dhl-border);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+    }
+
+    .social-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--dhl-blue);
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid rgba(225, 231, 255, 0.9);
+      margin-top: auto;
+      background: #ffffffd9;
+      backdrop-filter: blur(12px);
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 16px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: #9aa0b3;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.78rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-card {
+        order: -1;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-wrap {
+        margin-top: 18px;
+      }
+
+      .shell {
+        padding-inline: 14px;
+      }
+
+      .social-strip {
+        border-radius: var(--dhl-radius-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="shell header">
+    <div class="brand">
+      <!-- Replace logo.png with your logo file name in this repo -->
+      <img src="logo.png" alt="DigiHub Linker Logo" class="brand-logo">
+      <div class="brand-text">
+        <div class="brand-name">DigiHub Linker</div>
+        <div class="brand-tagline">Smart digital tools to automate, optimize, and grow your business.</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="https://digihublinker.com/" target="_blank" rel="noopener">Home</a>
+      <a href="https://digihublinker.com/top-digital-tools-for-online-business/" target="_blank" rel="noopener">Top Tools</a>
+      <a href="https://digihublinker.com/blog/" target="_blank" rel="noopener">Blog</a>
+      <a href="https://digihublinker.com/about/" target="_blank" rel="noopener">About</a>
+      <a href="https://digihublinker.com/contact-digihub-linker/" target="_blank" rel="noopener">Contact</a>
+      <a href="https://digihublinker.com/" target="_blank" rel="noopener" class="nav-cta">Visit full site</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+
+    <!-- Hero -->
+    <section class="hero-wrap">
+      <div class="hero">
+        <div>
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Curated tools for modern entrepreneurs
+          </div>
+
+          <h1 class="hero-title">
+            Discover the best <span>digital tools</span> to work smarter and grow faster online.
+          </h1>
+
+          <p class="hero-subtitle">
+            DigiHub Linker connects entrepreneurs, freelancers, and small business owners with trusted tools for
+            marketing, automation, SEO, AI, and productivity. Explore our curated collections and find the platforms
+            that actually move your business forward.
+          </p>
+
+          <div class="hero-actions">
+            <a href="https://digihublinker.com/" target="_blank" rel="noopener" class="btn-primary">
+              Visit full website <span class="btn-icon">↗</span>
+            </a>
+            <a href="https://digihublinker.com/top-digital-tools-for-online-business/" target="_blank" rel="noopener" class="btn-ghost">
+              Explore Top Tools <span class="btn-icon">⭐</span>
+            </a>
+          </div>
+
+          <div class="hero-microcopy">
+            <strong>Tip:</strong> Bookmark this page as your quick shortcut to DigiHub Linker.
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Quick overview of DigiHub Linker">
+          <div class="hero-card-header">
+            <div class="hero-card-title">What is DigiHub Linker?</div>
+            <span class="hero-card-pill">Online business toolkit</span>
+          </div>
+          <div class="hero-card-body">
+            <p>
+              A central hub where you can discover, compare, and explore digital tools that help you:
+            </p>
+            <ul class="hero-card-list">
+              <li><span>✓</span> Build and optimize websites</li>
+              <li><span>✓</span> Automate email, sales, and workflows</li>
+              <li><span>✓</span> Use AI to create, analyze, and grow</li>
+              <li><span>✓</span> Track performance with SEO and analytics tools</li>
+            </ul>
+            <p>
+              This GitHub mirror is a simple landing page that links directly to the live DigiHub Linker website.
+            </p>
+          </div>
+          <div class="hero-card-footer">
+            <span>Always updated at digihublinker.com</span>
+            <a href="https://digihublinker.com/" target="_blank" rel="noopener">Go to main site ↗</a>
+          </div>
+          <div class="hero-badge-stack" aria-hidden="true"></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Key sections -->
+    <section class="section" aria-label="Featured areas">
+      <h2 class="section-title">Jump into DigiHub Linker</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="card-title">Top Digital Tools</div>
+          <p class="card-text">
+            Discover our curated list of must-have platforms for website building, email marketing, automation,
+            SEO, and AI. Perfect for starting or scaling an online business.
+          </p>
+          <a href="https://digihublinker.com/top-digital-tools-for-online-business/" target="_blank" rel="noopener" class="card-link">
+            View top tools <span>↗</span>
+          </a>
+        </article>
+
+        <article class="card">
+          <div class="card-title">Insights & Blog</div>
+          <p class="card-text">
+            Read practical guides, comparisons, and strategies that help you choose the right tools and get more
+            from the software you already use.
+          </p>
+          <a href="https://digihublinker.com/blog/" target="_blank" rel="noopener" class="card-link">
+            Visit blog <span>↗</span>
+          </a>
+        </article>
+
+        <article class="card">
+          <div class="card-title">About & Contact</div>
+          <p class="card-text">
+            Learn the story behind DigiHub Linker and reach out if you have questions, collaboration ideas, or want
+            to suggest a tool to review.
+          </p>
+          <a href="https://digihublinker.com/about/" target="_blank" rel="noopener" class="card-link">
+            About DigiHub Linker <span>↗</span>
+          </a>
+          <a href="https://digihublinker.com/contact-digihub-linker/" target="_blank" rel="noopener" class="card-link">
+            Contact us <span>✉</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Social -->
+    <section class="section" aria-label="DigiHub Linker social profiles">
+      <div class="social-strip">
+        <span class="social-strip-label">Connect with DigiHub Linker:</span>
+
+        <a class="social-pill" href="https://www.facebook.com/DigiHubLinker" target="_blank" rel="noopener">
+          <span class="social-pill-dot"></span> Facebook
+        </a>
+        <a class="social-pill" href="https://www.instagram.com/DigiHubLinker" target="_blank" rel="noopener">
+          <span class="social-pill-dot"></span> Instagram
+        </a>
+        <a class="social-pill" href="https://www.threads.com/@DigiHubLinker" target="_blank" rel="noopener">
+          <span class="social-pill-dot"></span> Threads
+        </a>
+        <a class="social-pill" href="https://x.com/DigiHubLinker" target="_blank" rel="noopener">
+          <span class="social-pill-dot"></span> Twitter / X
+        </a>
+        <a class="social-pill" href="https://uk.pinterest.com/digihublinker/" target="_blank" rel="noopener">
+          <span class="social-pill-dot"></span> Pinterest
+        </a>
+        <a class="social-pill" href="https://medium.com/@digihublinker" target="_blank" rel="noopener">
+          <span class="social-pill-dot"></span> Medium
+        </a>
+        <a class="social-pill" href="https://www.facebook.com/groups/DigiHubLinker" target="_blank" rel="noopener">
+          <span class="social-pill-dot"></span> Facebook Group
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© <span id="year"></span> DigiHub Linker. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="https://digihublinker.com/" target="_blank" rel="noopener">Main website</a>
+        <a href="https://digihublinker.com/privacy-policy/" target="_blank" rel="noopener">Privacy</a>
+        <a href="https://digihublinker.com/terms-and-conditions/" target="_blank" rel="noopener">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Set current year in footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
